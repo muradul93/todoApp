@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="fragments/head :: head(title='Add Todo Item')"></head>
+	<body>
+		<div class="container-fluid">
+				<header th:replace="fragments/header :: header"></header>
+				<div class="col-md-12 pd-l-r-0">
+						<div class="row no-gutters">
+								<div th:replace="fragments/left-sidebar :: sidebarNav( activeMenu = 'addItem')"></div>
+								<div class="content" id="page-content">
+									<div class="row no-gutters">
+										<div class="col-md-12 mt-1">
+												<div class="card panel bg-light rounded-0">Fill up the form</div>
+												<div class="card panel bg-light rounded-0 mt-2">
+													<form class="form" action="/todo-items/add" method="post" @submit="addItem">
+														  <div class="form-group">
+														    <label for="item-name">Todo Item:</label>
+														    <input type="text" class="form-control" placeholder="Enter Item" id="item-name" name="itemTitle" v-model="itemTitle" required="required"/>
+														  </div>
+														  <div class="form-group">
+														    <label for="desc">Description:</label>
+														    <textarea class="textarea form-control" id="desc" name="description" v-model="description"></textarea>
+														  </div>
+														<div class="form-group">
+															<label for="priority">Priority:</label>
+															<select required="required" class="select form-control" id="priority" v-model="priority"  name="priority">
+																<option th:each="priority : ${priorities}"
+																		th:selected="${todoItem != null && todoItem.priority == priority}"
+																		th:value="${priority}" th:text="${priority}"></option>
+
+															</select>
+														</div>
+														  <button type="submit" class="btn btn-primary" v-bind:disabled="requestProcessing">Submit</button>
+														  <span v-bind:class="hasError ? 'text-danger' : 'text-success'">{{sysMsg}}</span>
+													</form>
+												</div>
+										</div>
+									</div>
+								</div>
+						</div>
+				</div>
+		</div>
+		<script type="text/javascript">
+			var vm = new Vue({
+				el : "#page-content",
+				data : {
+					itemTitle : "",
+					description : "",
+					priority : "",
+					addAnother : false,
+					sysMsg : "",
+					hasError : false,
+					requestProcessing : false
+				},
+				methods : {
+					addItem : function(e){
+						this.requestProcessing = true;
+						e.preventDefault();
+						let data = {
+								itemTitle : this.itemTitle,
+								description : this.description,
+							    priority : this.priority,
+								status : "TODO"
+						};
+						axios.post("/todo-items/add",data,{
+							headers : {
+								'Content-type':'application/json'
+							}
+						}).then(function(response){
+							if(response.status === 200){
+								vm.sysMsg = "Your request success!";
+								 setTimeout(function(){
+									vm.sysMsg = "";
+								},1500);
+								if(vm.addAnother){
+									vm.resetData();
+								}else{
+									 setTimeout(function(){
+										window.location.href  = "/todo-items/view-all";
+									},1000);
+								}
+							}else{
+								vm.hasError = true;
+								vm.sysMsg = "Something went wrong!";
+							}
+						}).catch(function (error) {
+					    console.log(error);
+					  })
+					  .then(function () {
+					    vm.requestProcessing = false;
+					  });
+					},
+					resetData : function(){
+						this.itemTitle = "";
+						this.description = "";
+					}
+				} 
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head th:fragment="head (title)">
+	<meta charset="UTF-8">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title th:text="${title}"></title>
+	<link type="text/css" href="/jquery-ui/jquery-ui.css" th:href="@{/jquery-ui/jquery-ui.css}" rel="stylesheet" />
+	<link type="text/css" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+	<link type="text/css" href="/css/custom-style.css" th:href="@{/css/custom-style.css}" rel="stylesheet" />
+	<link type="text/css" href="/css/responsive.css" th:href="@{/css/responsive.css}" rel="stylesheet" />
+
+	<script type="text/javascript" src="/js/jquery-1.12.4.js" th:src="@{/js/jquery-1.12.4.js}"></script>
+	<script type="text/javascript" src="/jquery-ui/jquery-ui.js" th:src="@{/jquery-ui/jquery-ui.js}"></script>
+	
+	<script type="text/javascript" src="/js/common.js" th:src="@{/js/common.js}"></script>
+	<script type="text/javascript" src="/js/vue.js" th:src="@{/js/vue.js}"></script>
+	<script type="text/javascript" src="/js/axios.min.js" th:src="@{/js/axios.min.js}"></script>
+</head>
+</html>

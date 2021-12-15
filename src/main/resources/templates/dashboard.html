@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="fragments/head :: head(title='Dashboard')"></head>
+	<body>
+		<div class="container-fluid" id="page-content">
+				<header th:replace="fragments/header :: header"></header>
+				<div class="col-md-12 pd-l-r-0">
+						<div class="row no-gutters">
+								<div th:replace="fragments/left-sidebar :: sidebarNav(activeMenu = 'dashboard')"></div>
+								<div class="content">
+									<div class="row mt-2">
+											<div class="col-md-3 text-center" v-for="status in statusWiseCount">
+												<div class="card">
+													<p class="pt-2">{{status.status}}</p>
+													<p>{{status.count}}</p>
+												</div>
+											</div>
+									</div>
+								</div>
+						</div>
+				</div>
+		</div>
+		<script type="text/javascript" th:inline="javascript">
+		var vm = new Vue({
+			el : "#page-content",
+			data : {
+				statusWiseCount : [],
+			},
+			mounted : function(){
+				this.statusWiseCount = [[${statusWiseCountList}]];
+			},
+		});
+		</script>
+	</body>
+</html>

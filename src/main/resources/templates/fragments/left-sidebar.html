@@ -1,0 +1,8 @@
+<th:block th:fragment="sidebarNav" xmlns:th="http://www.w3.org/1999/xhtml">
+		<div class="sidebar">
+			  <a th:classappend="${activeMenu == 'dashboard' ? 'active' : ''}" href="/dashboard">Dashboard</a>
+			  <a th:classappend="${activeMenu == 'addItem' ? 'active' : ''}" href="/todo-items/add">Add Todo</a>
+			  <a th:classappend="${activeMenu == 'viewTodoItems' ? 'active' : ''}" href="/todo-items/view-all">View Todo Items</a>
+			  <a  href="/logout">Logout</a>
+		</div>
+</th:block>
